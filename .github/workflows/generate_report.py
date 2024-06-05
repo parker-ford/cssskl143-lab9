@@ -158,13 +158,24 @@ def generate_report(results, effort_results, pmd_results, output_file):
                 f.write(f"Line {violation['line']}: {violation['text']}\n")
             f.write("\n")
 
+def generate_failed_report(output_file):
+    with open(output_file, "w") as f:
 
+        timestamp = datetime.datetime.now()
+        f.write(f"Report generated on {timestamp}\n\n")
+
+        f.write("Submitted code could not compile and therfore can not be tested\n")
+        f.write("Please fix the compilation errors and resubmit\n")
 
 
 xml_directory = 'target/surefire-reports'
 output_text_file = 'report.txt'
-results = parse_junit_xml(xml_directory)
-pmd_results = parse_pmd_xml('target')
-methods = parse_java_files('src/main/java')
-effort_results = check_requirements(methods, '.github/workflows/lineLengthRequirements.json')
-generate_report(results, effort_results, pmd_results, output_text_file)
+
+if not os.path.isdir(xml_directory):
+    generate_failed_report(output_text_file)
+else:
+    results = parse_junit_xml(xml_directory)
+    pmd_results = parse_pmd_xml('target')
+    methods = parse_java_files('src/main/java')
+    effort_results = check_requirements(methods, '.github/workflows/lineLengthRequirements.json')
+    generate_report(results, effort_results, pmd_results, output_text_file)
