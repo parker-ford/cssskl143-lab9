@@ -25,7 +25,9 @@ public class Sort {
         System.out.println("Array after bubble sort:");
 //        System.out.println(Arrays.toString(bubbleArray));
         System.out.println();
-
+        //test
+        asdf
+        System.out.println("test2");
 //        System.out.println("Array before selection sort:");
 //        System.out.println(Arrays.toString(selectionArray));
 //        selectionSort(selectionArray);
